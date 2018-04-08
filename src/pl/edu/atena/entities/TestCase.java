@@ -1,8 +1,12 @@
 package pl.edu.atena.entities;
 
-import java.time.LocalDate;
+import java.sql.Clob;
+import java.util.Date;
+import java.time.Instant;
 import java.util.List;
+import java.util.Random;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,19 +32,22 @@ public class TestCase extends BaseEntity {
 	@Column(name = "TestCaseName", nullable = false, length = 100)
 	private String name;
 	private TestCaseStatus status;
-	// private Clob request;
-	// private Clob response;
-	@OneToMany(fetch=FetchType.EAGER)
+	//private Clob request;
+	//private Clob response;
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinTable(name = "TC_RESULTLIST", joinColumns = @JoinColumn(name = "TC_ID"), inverseJoinColumns = @JoinColumn(name = "TCRESULT_ID"))
 	private List<TestResult> resultList;
-	private LocalDate lastExecutionDate;
+	private Date lastExecutionDate;
 	private String inputFileId;
 	
 	public TestCase() {
 		super();
-		this.name="nieustalona";
+		Random generator = new Random();
+
+		this.name="TC_Number_"+String.valueOf(generator.nextInt(100000));
+		
 		this.status=TestCaseStatus.PREPARED;
-		this.lastExecutionDate=LocalDate.now();
+		this.lastExecutionDate=Date.from(Instant.now());
 		this.inputFileId="testowyplik";
 	}
 	public void buildRequest() {

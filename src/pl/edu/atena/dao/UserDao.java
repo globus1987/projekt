@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,6 +15,7 @@ import javax.persistence.criteria.Root;
 import lombok.Data;
 import pl.edu.atena.entities.User;
 import pl.edu.atena.enums.UserType;
+import pl.edu.atena.jms.MessageProducerMulti;
 
 @Data
 @Stateless
@@ -22,9 +25,11 @@ public class UserDao {
 
 	@EJB
 	private User newUser;
-
+	@EJB
+	private MessageProducerMulti<User> producer;
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void save(User user) {
-		if (user.getId() ==null || user.getId() ==0) {
+		if (user.getId() == null || user.getId() == 0) {
 			em.persist(user);
 		} else {
 			em.merge(user);
@@ -78,5 +83,4 @@ public class UserDao {
 		em.merge(newUser);
 	}
 
-	
 }

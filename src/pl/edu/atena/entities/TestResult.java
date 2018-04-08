@@ -1,6 +1,7 @@
 package pl.edu.atena.entities;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,9 +30,15 @@ public class TestResult extends BaseEntity {
 
 	public TestResult() {
 		super();
-		this.actualValue = "0";
-		this.expectedValue = "0";
-		this.valueComparison=true;
+		Random generator = new Random();
+
+		this.actualValue = String.valueOf(generator.nextInt());
+		this.expectedValue = String.valueOf(generator.nextInt());
+		
+		this.valueComparison=this.actualValue==this.expectedValue?true:false;
+	}
+	public void setValueComparison() {
+		this.valueComparison=this.actualValue==this.expectedValue?true:false;
 	}
 
 }
