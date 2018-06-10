@@ -1,8 +1,7 @@
 package pl.edu.atena.entities;
 
-import java.sql.Clob;
-import java.util.Date;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +28,10 @@ public class TestCase extends BaseEntity {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	@Column(name = "TestCaseName", nullable = false, length = 100)
 	private String name;
 	private TestCaseStatus status;
@@ -52,6 +55,18 @@ public class TestCase extends BaseEntity {
 	}
 	public void buildRequest() {
 		// TODO
+	}
+	public void checkTestCaseStatus() {
+		TestCaseStatus tempStatus = TestCaseStatus.PREPARED;
+		for (int i=0;i<resultList.size();i++) {
+			tempStatus=resultList.get(i).getActualValue().equals(resultList.get(i).getExpectedValue())?TestCaseStatus.SUCCESS:TestCaseStatus.FAILED;
+			if (tempStatus==TestCaseStatus.FAILED) {
+				this.status = tempStatus;
+				return;
+			}
+		}
+		this.status = tempStatus;
+		return;
 	}
 
 }

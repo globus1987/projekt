@@ -12,7 +12,7 @@
 		
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action"
-				value="drop-and-create" />
+				value="none" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.format_sql" value="true"></property>
 			<property name="hibernate.use_sql_comments" value="true" />

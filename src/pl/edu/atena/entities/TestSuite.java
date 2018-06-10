@@ -1,5 +1,6 @@
 package pl.edu.atena.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,14 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Data;
-import lombok.Setter;
 
 /**
  * Entity implementation class for Entity: TestSuite
@@ -28,8 +30,39 @@ import lombok.Setter;
 
 @Table(name = "MultiSpi_TestSuite")
 @XmlRootElement(name="Zestaw")
-@Setter
+@Data
 public class TestSuite extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	public Date getImportDate() {
+		return importDate;
+	}
+
+
+	public void setImportDate(Date importDate) {
+		this.importDate = importDate;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setCreatorUser(User creatorUser) {
+		this.creatorUser = creatorUser;
+	}
+
+
+	public void setTestcaseList(List<TestCase> testcaseList) {
+		this.testcaseList = testcaseList;
+	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -53,9 +86,15 @@ public class TestSuite extends BaseEntity {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "TESTSUITE_TESTCASE", joinColumns = @JoinColumn(name = "TS_ID"), inverseJoinColumns = @JoinColumn(name = "TC_ID"))
 	private List<TestCase> testcaseList;
-
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date importDate;
+	@Lob
+	private String request;
+	
+	
 	public TestSuite() {
 		super();
+		this.creatorUser = new User();
 		this.name = "testowy suite";
 
 	}

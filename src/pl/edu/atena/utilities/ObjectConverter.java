@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pl.edu.atena.entities.TestSuite;
+import pl.edu.atena.rest.StartBean;
 
 @Stateless
 public class ObjectConverter {
@@ -24,6 +25,14 @@ public class ObjectConverter {
 		String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(testsuite);
 		return jsonInString;
 	}
+	public static String convertRequestToJSON(StartBean startBean) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		// Object to JSON in String
+		String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(startBean);
+		return jsonInString;
+	}
+	
 
 	public void saveToJSON(TestSuite testsuite) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();

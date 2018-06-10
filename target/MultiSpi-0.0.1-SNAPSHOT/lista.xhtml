@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+	<h1>lista polis</h1>
+	<h:form>
+		<p:dataList value="#{listaAction.testsuity}" var="testsuite"
+			type="ordered">
+			<f:facet name="header">
+            Basic
+        </f:facet>
+        #{testsuite.name}, #{testsuite.creatorUser}
+    </p:dataList>
+		<p:separator></p:separator>
+
+		<p:dataGrid var="ts2" value="#{listaAction.testsuity}" columns="3"
+			layout="grid" rows="12" paginator="true" id="ts"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="6,12,16">
+
+			<f:facet name="header">
+            Testsuity
+        </f:facet>
+
+			<p:panel header="#{ts2.name}" style="text-align:center">
+				<h:panelGrid columns="1" style="width:100%">
+					<h:outputText title="creator firstname"
+						value="#{ts2.creatorUser.firstName}" />
+					<h:outputText title="creator surname"
+						value="#{ts2.creatorUser.surname}" />
+					<h:outputText title="importdate" value="#{ts2.importDate}">importdate</h:outputText>
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+		<p:separator></p:separator>
+
+		<p:dataTable var="ts3" value="#{listaAction.testsuity}">
+			<p:column headerText="Id">
+				<h:outputText value="#{ts3.id}" />
+			</p:column>
+			<p:column headerText="Name">
+				<h:outputText value="#{ts3.name}" />
+			</p:column>
+
+			<p:column headerText="creator firstname">
+				<h:outputText value="#{ts3.creatorUser.firstName}" />
+			</p:column>
+
+			<p:column headerText="creator surname">
+				<h:outputText value="#{ts3.creatorUser.surname}" />
+			</p:column>
+
+			<p:column headerText="importdate">
+				<h:outputText value="#{ts3.importDate}" />
+			</p:column>
+			<p:column headerText="edytuj">
+
+				<p:commandLink action="#{listaAction.nowa}">
+					<h:outputText value="edytuj" />
+					<f:param name="idts" value="#{ts3.id}" />
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	<p:separator></p:separator>
+	<p:carousel value="#{listaAction.testsuity}" headerText="Responsive"
+		var="ts4" itemStyle="text-align:center" responsive="true">
+		<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+			columnClasses="label,value" layout="grid"
+			styleClass="ui-panelgrid-blank">
+			<f:facet name="testsuity">
+			</f:facet>
+
+			<h:outputText value="Name:" />
+			<h:outputText value="#{ts4.name}" />
+
+			<h:outputText value="importdate:" />
+			<h:outputText value="#{ts4.importDate}" />
+
+			<h:outputText value="creator firstname:" />
+			<h:outputText value="#{ts4.creatorUser.firstName}" />
+
+			<h:outputText value="creator surname:" />
+			<h:outputText value="#{ts4.creatorUser.surname}" />
+		</p:panelGrid>
+
+
+	</p:carousel>
+	<p:separator></p:separator>
+
+	<h:form>
+		<p:commandButton ajax="false" value="Rejestruj" icon="ui-icon-disk"
+			action="#{listaAction.nowa}" />
+	</h:form>
+</h:body>
+</html>

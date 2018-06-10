@@ -3,12 +3,13 @@ package pl.edu.atena.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateless;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
 
-@Stateless
+
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RootBean {
 	private List<InstanceBean> InstanceList = new ArrayList<>();
 	private int requestCapacity;

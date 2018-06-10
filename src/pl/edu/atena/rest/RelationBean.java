@@ -1,11 +1,12 @@
 package pl.edu.atena.rest;
 
-import javax.ejb.Stateless;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
 
-@Stateless
+
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RelationBean {
 	private String sourceId;
 	private String targetId;

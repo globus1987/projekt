@@ -1,7 +1,5 @@
 package pl.edu.atena.audyt;
 
-import java.sql.Clob;
-
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;

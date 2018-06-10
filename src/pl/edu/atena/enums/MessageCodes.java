@@ -10,7 +10,9 @@ public enum MessageCodes {
 	error_900007("Too many rows."),
 	error_900008("Setup data is not starting in first row."),
 	error_900009("There is no value in cell:"),
-	error_900010("Missing data in row:");
+	error_900010("Missing data in row:"),
+	error_900011("Attribute value without a name in first row: "),
+	error_900012("No attribute header row in object sheet.");
 	
 
 	

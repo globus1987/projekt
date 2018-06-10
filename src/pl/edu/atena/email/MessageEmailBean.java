@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Stateless
-public class MessageEmailBean {
-private String subject;
-private String text;
+public class MessageEmailBean<T> {
+	private String subject;
+	private T text;
 }

@@ -1,14 +1,11 @@
 package pl.edu.atena.validator;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
@@ -26,7 +23,7 @@ import pl.edu.atena.utilities.InputFileBean;
 @Log
 public abstract class InputFileSetupValidatorBean extends InputFileSheetValidatorBean {
 	
-	@EJB
+	@Inject
 	private static InputFileBean inputFile;
 
 	public static boolean getValidationResult(XSSFSheet sheet, MessageListBean messageListForFile) {

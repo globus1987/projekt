@@ -11,6 +11,7 @@ import javax.jws.WebParam;
 import javax.jws.WebParam.Mode;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.mail.MessagingException;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.ws.Holder;
@@ -49,7 +50,7 @@ public class WSTest {
 
 	@WebMethod(operationName = "WczytajTestSuite")
 	@WebResult(name = "Wynik", targetNamespace = "http://pl.edu.atena")
-	public TestSuite WczytajTestSuite() throws IOException, JAXBException {
+	public TestSuite WczytajTestSuite() throws IOException, JAXBException, MessagingException {
 		Random generator = new Random();
 		TestSuite tsexample = new TestSuite();
 		User user = new User();
@@ -84,7 +85,7 @@ public class WSTest {
 
 	@WebMethod(operationName = "DodajTestSuite")
 	@WebResult(name = "Wynik", targetNamespace = "http://pl.edu.atena")
-	public TestSuite dodajTestSuite(@WebParam(name = "TestSuite") @XmlElement(required = true) TestSuite ts) throws IOException, JAXBException {
+	public TestSuite dodajTestSuite(@WebParam(name = "TestSuite") @XmlElement(required = true) TestSuite ts) throws IOException, JAXBException, MessagingException {
 		testSuiteDao.save(ts);
 		return ts;
 	}

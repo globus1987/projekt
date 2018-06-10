@@ -3,12 +3,13 @@ package pl.edu.atena.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateless;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
 
-@Stateless
+
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ObjectBean implements IModelBean{
 private String id;
 private String name;
@@ -23,7 +24,7 @@ public ObjectBean() {
 }
 @Override
 public void setDefaultValues() {
-	this.id="";
+	this.id="1";
 	this.name="";
 	this.attributeList=new ArrayList<AttributeBean>();
 	this.attributeList.add(new AttributeBean());

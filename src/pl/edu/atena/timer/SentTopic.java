@@ -6,7 +6,6 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;

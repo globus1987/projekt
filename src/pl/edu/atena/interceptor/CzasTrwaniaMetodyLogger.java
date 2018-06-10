@@ -11,7 +11,6 @@ import javax.interceptor.InvocationContext;
 import org.apache.log4j.Logger;
 
 import pl.edu.atena.audyt.AudytDao;
-import pl.edu.atena.utilities.ObjectConverter;
 
 public class CzasTrwaniaMetodyLogger {
 

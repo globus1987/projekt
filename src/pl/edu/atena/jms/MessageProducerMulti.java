@@ -12,8 +12,12 @@ import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.Topic;
+import javax.mail.MessagingException;
 
 import org.apache.log4j.Logger;
+
+import pl.edu.atena.email.EmailBean;
+import pl.edu.atena.email.MessageEmailBean;
 @Stateless
 public class MessageProducerMulti<T> {
 	Logger log = Logger.getLogger("log_producer");
@@ -43,7 +47,7 @@ public class MessageProducerMulti<T> {
 			e.printStackTrace();
 		}
 	}
-	public void sentTopic(T value) {
+	public void sentTopic(T value) throws MessagingException {
 		try {
 			Connection connection = null;
 			MessageProducer publisher = null;
@@ -54,7 +58,9 @@ public class MessageProducerMulti<T> {
 			connection.start();
 			ObjectMessage message = session.createObjectMessage();
 			message.setObject((Serializable) value);
-
+			MessageEmailBean<String> mess = new MessageEmailBean<>();
+			mess.setText(value.toString());
+			EmailBean.sendGMXText(mess);
 			publisher.send(message);
 			log.info("wys³ano topic");
 			

@@ -1,14 +1,16 @@
 package pl.edu.atena.dao;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import pl.edu.atena.entities.TestCase;
-import pl.edu.atena.entities.TestResult;
 import pl.edu.atena.jms.MessageProducerMulti;
 
 @Stateless
@@ -40,5 +42,9 @@ public class TestCaseDao {
 		if (testCase != null) {
 			em.remove(testCase);
 		}
+	}
+	public List<TestCase> selectAll(){
+		Query query = em.createQuery("select p from TestCase p");
+		return query.getResultList();
 	}
 }

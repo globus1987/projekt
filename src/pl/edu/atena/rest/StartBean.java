@@ -1,12 +1,14 @@
 package pl.edu.atena.rest;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
 
-@Stateless
+
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StartBean {
 @EJB
 private RootBean root;

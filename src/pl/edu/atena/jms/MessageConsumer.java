@@ -9,8 +9,6 @@ import javax.jms.ObjectMessage;
 
 import org.apache.log4j.Logger;
 
-import pl.edu.atena.entities.TestSuite;
-
 /**
  * Message-Driven Bean implementation class for: MessageConsumer
  */

@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMultipart;
 
 @Stateless
 public class EmailBean {
-	public static void sendGMX(MessageEmailBean mess) throws MessagingException {
+	public static void sendGMXText(MessageEmailBean mess) throws MessagingException {
 		String sender = "globus1987@gmx.com";
 		String password = "Cartusia21";
 		String receiver = "globus1987@gmail.com";
@@ -43,7 +43,7 @@ public class EmailBean {
 		MimeMessage message = new MimeMessage(mailSession);
 		InternetAddress addressTo = new InternetAddress(receiver);
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setText(mess.getText(), "UTF-8", "plain");
+		messageBodyPart.setText(mess.getText().toString(), "UTF-8", "plain");
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart);
 
@@ -51,6 +51,7 @@ public class EmailBean {
 		message.setFrom(new InternetAddress(sender));
 		message.setSubject(mess.getSubject());
 		message.setContent(multipart);
+		message.setSender(new InternetAddress("dupa@Dupa.pl"));
 
 		Transport.send(message);
 	}
