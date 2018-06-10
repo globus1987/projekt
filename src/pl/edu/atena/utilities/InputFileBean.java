@@ -38,7 +38,6 @@ public class InputFileBean {
 		XSSFWorkbook wb = null;
 		try {
 			XSSFWorkbook wb2 = new XSSFWorkbook(this.fileIn);
-			// wb = new XSSFWorkbook("D:\\TestTool.xlsx");
 			XSSFSheet sheet = wb2.getSheetAt(0);
 			XSSFRow row0 = sheet.getRow(0);
 			this.endpoint = row0.getCell(1).getStringCellValue();
@@ -52,6 +51,7 @@ public class InputFileBean {
 			this.language = row4.getCell(1).getStringCellValue();
 			XSSFRow row5 = sheet.getRow(5);
 			this.requestedCapacity = (int) row5.getCell(1).getNumericCellValue();
+			wb2.close();
 		} finally {
 			if (wb != null)
 				wb.close();
@@ -63,11 +63,10 @@ public class InputFileBean {
 	}
 	public InputFileBean(String filename) throws IOException, EncryptedDocumentException, InvalidFormatException {
 		this.fileIn = new FileInputStream(new File(filename));
-		this.fileOut = new FileOutputStream((new File(filename+"-New")));
+		this.fileOut = new FileOutputStream((new File(filename)));
 		XSSFWorkbook wb = null;
 		try {
 			XSSFWorkbook wb2 = new XSSFWorkbook(this.fileIn);
-			// wb = new XSSFWorkbook("D:\\TestTool.xlsx");
 			XSSFSheet sheet = wb2.getSheetAt(0);
 			XSSFRow row0 = sheet.getRow(0);
 			this.endpoint = row0.getCell(1).getStringCellValue();
@@ -81,6 +80,7 @@ public class InputFileBean {
 			this.language = row4.getCell(1).getStringCellValue();
 			XSSFRow row5 = sheet.getRow(5);
 			this.requestedCapacity = (int) row5.getCell(1).getNumericCellValue();
+			wb2.close();
 		} finally {
 			if (wb != null)
 				wb.close();
@@ -114,6 +114,7 @@ public class InputFileBean {
 			this.language = row4.getCell(1).getStringCellValue();
 			XSSFRow row5 = sheet.getRow(5);
 			this.requestedCapacity = (int) row5.getCell(1).getNumericCellValue();
+			wb2.close();
 		} finally {
 			if (wb != null)
 				wb.close();

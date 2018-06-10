@@ -67,8 +67,8 @@ public class RequestBuilderService {
 		mess.setText(ObjectConverter.convertRequestToJSON(start));
 		EmailBean.sendGMXText(mess);
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
-		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
-		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());
+		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects(filename));
+		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations(filename));
 		
 		return Response.status(200).entity(ObjectConverter.convertRequestToJSON(start)).build();
 	}
