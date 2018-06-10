@@ -70,43 +70,6 @@ public class UserService {
 		return Response.status(200).entity(newUser).build();
 	}
 
-	@POST
-	@Path(value = "/XLSXUser")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response create() {
-		User newUser = new User();
-		newUser.setEmailAddress(inputFile.getEmail());
-		newUser.setFirstName(inputFile.getUserFirstname());
-		newUser.setSurname(inputFile.getUserSurname());
-		newUser.setUserType(UserType.USER);
-
-		userDao.save(newUser);
-		return Response.status(200).entity(newUser).build();
-	}
-
-	@POST
-	@Path(value = "/UserByXLSX2")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes("multipart/form-data")
-	public Response create2(MultipartFormDataInput input)
-			throws EncryptedDocumentException, InvalidFormatException, IOException {
-		User newUser = new User();
-		String fileName = "";
-
-		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-		List<InputPart> inputParts = uploadForm.get("uploadedFile");
-		for (InputPart inputPart : inputParts) {
-			InputStream inputStream = inputPart.getBody(InputStream.class, null);
-			InputFileBean inputFile = new InputFileBean(inputStream);
-			newUser.setEmailAddress(inputFile.getEmail());
-			newUser.setFirstName(inputFile.getUserFirstname());
-			newUser.setSurname(inputFile.getUserSurname());
-			newUser.setUserType(UserType.USER);
-			userDao.save(newUser);
-		}
-		return Response.status(200).entity(newUser).build();
-	}
-
 	@GET
 	@Path(value = "/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

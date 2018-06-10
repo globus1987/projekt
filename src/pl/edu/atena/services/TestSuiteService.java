@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.transaction.HeuristicMixedException;
@@ -32,6 +31,12 @@ import javax.xml.bind.JAXBException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+
 
 import pl.edu.atena.dao.TestCaseDao;
 import pl.edu.atena.dao.TestResultDao;
@@ -47,6 +52,7 @@ import pl.edu.atena.entities.factory.TestElementFactory;
 import pl.edu.atena.utilities.InputFileBean;
 import pl.edu.atena.utilities.ObjectConverter;
 import pl.edu.atena.utilities.TestowaXLS;
+import pl.edu.atena.utilities.XLSFile;
 
 @Path(value = "/testsuite")
 public class TestSuiteService {

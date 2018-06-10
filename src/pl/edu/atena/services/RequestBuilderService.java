@@ -1,21 +1,30 @@
 package pl.edu.atena.services;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 import javax.mail.MessagingException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import pl.edu.atena.email.EmailBean;
 import pl.edu.atena.email.MessageEmailBean;
 import pl.edu.atena.rest.StartBean;
 import pl.edu.atena.utilities.ObjectConverter;
+import pl.edu.atena.utilities.XLSFile;
 import pl.edu.atena.xls.dao.ImportDataFromXLS;
 @Path(value = "/RequestBuilder")
 public class RequestBuilderService {
@@ -36,6 +45,31 @@ public class RequestBuilderService {
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());
+		return Response.status(200).entity(ObjectConverter.convertRequestToJSON(start)).build();
+	}
+	
+	@POST
+	@Path(value = "/getRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response createNew(MultipartFormDataInput multipartFormDataInput) throws MessagingException, InvalidFormatException, IOException {
+		FileServiceImpl fileservice = new FileServiceImpl();
+		String filename = fileservice.uploadFile(multipartFormDataInput);
+		
+		
+		StartBean start = new StartBean();
+		start.getRoot().setRequestCapacity(1);
+		LocalDate date = LocalDate.now();		
+		String data=String.format("%s-%s-%s", date.getYear(),date.getMonthValue(),date.getDayOfMonth());
+		start.getRoot().getInstanceList().get(0).setSalesDate(data);
+		start.getRoot().getInstanceList().get(0).setValidDate(data);
+		MessageEmailBean<String> mess = new MessageEmailBean<>();
+		mess.setText(ObjectConverter.convertRequestToJSON(start));
+		EmailBean.sendGMXText(mess);
+		ImportDataFromXLS objdata = new ImportDataFromXLS();
+		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
+		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());
+		
 		return Response.status(200).entity(ObjectConverter.convertRequestToJSON(start)).build();
 	}
 	

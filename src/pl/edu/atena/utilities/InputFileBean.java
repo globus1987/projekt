@@ -61,6 +61,35 @@ public class InputFileBean {
 				fileIn.close();
 		}
 	}
+	public InputFileBean(String filename) throws IOException, EncryptedDocumentException, InvalidFormatException {
+		this.fileIn = new FileInputStream(new File(filename));
+		this.fileOut = new FileOutputStream((new File(filename+"-New")));
+		XSSFWorkbook wb = null;
+		try {
+			XSSFWorkbook wb2 = new XSSFWorkbook(this.fileIn);
+			// wb = new XSSFWorkbook("D:\\TestTool.xlsx");
+			XSSFSheet sheet = wb2.getSheetAt(0);
+			XSSFRow row0 = sheet.getRow(0);
+			this.endpoint = row0.getCell(1).getStringCellValue();
+			XSSFRow row1 = sheet.getRow(1);
+			this.userFirstname = row1.getCell(1).getStringCellValue();
+			XSSFRow row2 = sheet.getRow(2);
+			this.userSurname = row2.getCell(1).getStringCellValue();
+			XSSFRow row3 = sheet.getRow(3);
+			this.email = row3.getCell(1).getStringCellValue();
+			XSSFRow row4 = sheet.getRow(4);
+			this.language = row4.getCell(1).getStringCellValue();
+			XSSFRow row5 = sheet.getRow(5);
+			this.requestedCapacity = (int) row5.getCell(1).getNumericCellValue();
+		} finally {
+			if (wb != null)
+				wb.close();
+			if (fileOut != null)
+				fileOut.close();
+			if (fileIn != null)
+				fileIn.close();
+		}
+	}
 
 	public InputFileBean(InputStream inputStream)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
@@ -94,6 +123,7 @@ public class InputFileBean {
 				fileIn.close();
 		}
 	}
+
 
 	public XSSFSheet getSheet(String name) throws InvalidFormatException, IOException {
 
