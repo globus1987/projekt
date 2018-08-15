@@ -7,11 +7,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.Dependent;
 import java.io.*;
 import java.util.Objects;
 
 @Stateful
 @Data
+@Dependent
 public class InputFileBean {
 	private String endpoint;
 	private String userFirstname;
@@ -43,8 +45,8 @@ public class InputFileBean {
                 this.requestedCapacity = (int) row5.getCell(1).getNumericCellValue();
             }
 		} finally {
-            Objects.requireNonNull(wb).close();
-				fileOut.close();
+
+            fileOut.close();
 				fileIn.close();
 		}
 	}

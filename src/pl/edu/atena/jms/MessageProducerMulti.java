@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.jms.*;
 import javax.mail.MessagingException;
 import java.io.Serializable;
+
 @Stateless
 public class MessageProducerMulti<T> {
 	Logger log = Logger.getLogger("log_producer");

@@ -18,8 +18,7 @@ import java.time.LocalDate;
 @Path(value = "/RequestBuilder")
 public class RequestBuilderService {
 	private static final String DATEFORMAT = "%s-%s-%s";
-	@Inject
-	private EmailBean emailBean;
+
 	@Inject
 	private ObjectConverter objectConverter;
 	@GET
@@ -32,9 +31,7 @@ public class RequestBuilderService {
 		String data = String.format(DATEFORMAT, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 		start.getRoot().getInstanceList().get(0).setSalesDate(data);
 		start.getRoot().getInstanceList().get(0).setValidDate(data);
-		MessageEmailBean<String> mess = new MessageEmailBean<>();
-		mess.setText(objectConverter.convertRequestToJSON(start));
-		emailBean.sendGMXText(mess);
+
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());
@@ -56,9 +53,7 @@ public class RequestBuilderService {
 		String data = String.format(DATEFORMAT, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 		start.getRoot().getInstanceList().get(0).setSalesDate(data);
 		start.getRoot().getInstanceList().get(0).setValidDate(data);
-		MessageEmailBean<String> mess = new MessageEmailBean<>();
-		mess.setText(objectConverter.convertRequestToJSON(start));
-		emailBean.sendGMXText(mess);
+
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects(filename));
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations(filename));
@@ -73,9 +68,7 @@ public class RequestBuilderService {
 		String data = String.format(DATEFORMAT, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 		start.getRoot().getInstanceList().get(0).setSalesDate(data);
 		start.getRoot().getInstanceList().get(0).setValidDate(data);
-		MessageEmailBean<String> mess = new MessageEmailBean<>();
-		mess.setText(objectConverter.convertRequestToJSON(start));
-		emailBean.sendGMXText(mess);
+
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());

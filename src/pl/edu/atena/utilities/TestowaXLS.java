@@ -5,12 +5,14 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import pl.edu.atena.logger.MessageListBean;
 import pl.edu.atena.validator.InputFileSetupValidatorBean;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.io.IOException;
 
-public abstract class TestowaXLS {
+@Dependent
+public class TestowaXLS {
 	@Inject
-	private static MessageListBean messageListForFile = new MessageListBean();
+	private MessageListBean messageListForFile = new MessageListBean();
 	@Inject
 	private InputFileSetupValidatorBean inputFileSetupValidatorBean;
 

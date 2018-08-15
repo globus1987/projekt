@@ -10,11 +10,13 @@ import pl.edu.atena.enums.MessageCodes;
 import pl.edu.atena.logger.MessageListBean;
 import pl.edu.atena.utilities.InputFileBean;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Stateless
 public class InputFileObjectValidatorBean extends InputFileSheetValidatorBean {
 	private static int firstDataRow = 4;
 	@Inject

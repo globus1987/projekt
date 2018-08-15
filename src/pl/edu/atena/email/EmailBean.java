@@ -15,7 +15,6 @@ import java.util.Properties;
 public class EmailBean {
 
 	public EmailBean() {
-		throw new IllegalStateException("Utility class");
 	}
 
 	public void sendGMXText(MessageEmailBean mess) throws MessagingException {

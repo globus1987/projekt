@@ -12,6 +12,8 @@ import pl.edu.atena.enums.MessageCodes;
 import pl.edu.atena.logger.MessageListBean;
 import pl.edu.atena.utilities.InputFileBean;
 
+import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,10 +21,12 @@ import java.util.List;
 
 @Data
 @Log
-public abstract class InputFileSetupValidatorBean extends InputFileSheetValidatorBean {
+@Dependent
+@Stateless
+public class InputFileSetupValidatorBean extends InputFileSheetValidatorBean {
 	
 	@Inject
-	private static InputFileBean inputFile;
+	private InputFileBean inputFile;
 
 	public boolean getValidationResult(XSSFSheet sheet, MessageListBean messageListForFile) {
 		boolean result = true;

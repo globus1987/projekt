@@ -4,7 +4,6 @@ import pl.edu.atena.dao.TestCaseDao;
 import pl.edu.atena.dao.TestResultDao;
 import pl.edu.atena.dao.TestSuiteDao;
 import pl.edu.atena.dao.UserDao;
-import pl.edu.atena.email.EmailBean;
 import pl.edu.atena.entities.User;
 import pl.edu.atena.entities.factory.TestElementFactory;
 import pl.edu.atena.enums.UserType;
@@ -35,8 +34,6 @@ public class UserService {
 	@Inject
 	private ObjectConverter objectConvert;
 
-	@Inject
-	private EmailBean emailBean;
 
 	@Inject
 	private TestElementFactory testFactory;
