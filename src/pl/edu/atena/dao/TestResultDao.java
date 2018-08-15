@@ -25,7 +25,6 @@ public class TestResultDao {
 		} else {
 			em.merge(testresult);
 		}
-		;
 	}
 
 	public TestResult find(Long id) {

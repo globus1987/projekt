@@ -1,5 +1,6 @@
 package pl.edu.atena.webservice;
 
+import org.apache.log4j.Logger;
 import pl.edu.atena.dao.TestSuiteDao;
 import pl.edu.atena.dao.UserDao;
 import pl.edu.atena.entities.TestCase;
@@ -20,11 +21,10 @@ import javax.xml.ws.Holder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @WebService(targetNamespace = "http://pl.edu.atena")
 public class WSTest {
-
+	Logger log = Logger.getLogger("log_wsTest");
 	@EJB
 	private UserDao userDao;
 
@@ -49,22 +49,20 @@ public class WSTest {
 
 	@WebMethod(operationName = "WczytajTestSuite")
 	@WebResult(name = "Wynik", targetNamespace = "http://pl.edu.atena")
-	public TestSuite WczytajTestSuite() throws IOException, JAXBException, MessagingException {
-		Random generator = new Random();
+	public TestSuite wczytajTestSuite() throws IOException, JAXBException, MessagingException {
 		TestSuite tsexample = new TestSuite();
 		User user = new User();
 		TestCase testcase = new TestCase();
-		TestCase testcase2 = new TestCase();
 		TestResult result = new TestResult();
 		TestResult result2 = new TestResult();
 		TestResult result3 = new TestResult();
 		tsexample.setCreatorUser(user);
-		List<TestResult> resultlist = new ArrayList<TestResult>();
+		ArrayList<TestResult> resultlist = new ArrayList<>();
 		resultlist.add(result);
 		resultlist.add(result2);
 		resultlist.add(result3);
 		testcase.setResultList(resultlist);
-		List<TestCase> testcaselist = new ArrayList<TestCase>();
+		List<TestCase> testcaselist = new ArrayList<>();
 		testcaselist.add(testcase);
 		tsexample.setTestcaseList(testcaselist);
 
@@ -76,8 +74,8 @@ public class WSTest {
 			testSuiteDao.save(tsexample);
 
 		} catch (Exception e) {
-			System.out.println("cos sie wywalilo");
-			System.out.println(e.getCause().toString());
+			log.error("cos sie wywalilo");
+			log.error(e.getCause().toString());
 		}
 		return tsexample;
 	}

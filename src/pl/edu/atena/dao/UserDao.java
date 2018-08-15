@@ -1,6 +1,10 @@
 package pl.edu.atena.dao;
 
-import java.util.List;
+import lombok.Data;
+import pl.edu.atena.entities.User;
+import pl.edu.atena.enums.UserType;
+import pl.edu.atena.jms.MessageProducerMulti;
+import pl.edu.atena.utilities.InputFileBean;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -13,12 +17,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import lombok.Data;
-import pl.edu.atena.entities.User;
-import pl.edu.atena.enums.UserType;
-import pl.edu.atena.jms.MessageProducerMulti;
-import pl.edu.atena.utilities.InputFileBean;
+import java.util.List;
 
 @Data
 @Stateless
@@ -41,7 +40,6 @@ public class UserDao {
 		} else {
 			em.merge(user);
 		}
-		;
 	}
 
 	public void delete(Long id) {
@@ -70,11 +68,7 @@ public class UserDao {
 		Root<User> p = query.from(User.class);
 		query.select(p);
 		query.where(cb.equal(p.get("userType"), usertype));
-
-		List<User> list = this.em.createQuery(query).getResultList();
-
-		// set the root class
-		return list;
+		return this.em.createQuery(query).getResultList();
 	}
 	public List<User> findByEmail(String emailAddress) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -83,11 +77,7 @@ public class UserDao {
 		Root<User> p = query.from(User.class);
 		query.select(p);
 		query.where(cb.equal(p.get("emailAddress"), emailAddress));
-
-		List<User> list = this.em.createQuery(query).getResultList();
-
-		// set the root class
-		return list;
+		return this.em.createQuery(query).getResultList();
 	}
 
 	public User retrieve(Long id) {

@@ -11,18 +11,21 @@ import java.io.IOException;
 public abstract class TestowaXLS {
 	@Inject
 	private static MessageListBean messageListForFile = new MessageListBean();
+	@Inject
+	private InputFileSetupValidatorBean inputFileSetupValidatorBean;
 
-    public static MessageListBean testuj() throws InvalidFormatException, IOException {
+	public MessageListBean testuj() throws InvalidFormatException, IOException {
+
 		InputFileBean input = new InputFileBean();
 		XSSFSheet sheet = input.getSheet("Setup");
-		boolean validationResult = InputFileSetupValidatorBean.getValidationResult(sheet,messageListForFile);
+		boolean validationResult = inputFileSetupValidatorBean.getValidationResult(sheet, messageListForFile);
 		System.out.println(messageListForFile);
 
 		System.out.println(validationResult);
 		input.closeStreams();
 		return messageListForFile;
-	
- 
+
+
 	}
 
 }

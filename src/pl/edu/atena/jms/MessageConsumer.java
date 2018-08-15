@@ -23,10 +23,6 @@ public class MessageConsumer<T> implements MessageListener {
 	 */
 	Logger log = Logger.getLogger("messageconsumer");
 
-	public MessageConsumer() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @see MessageListener#onMessage(Message)
 	 */
@@ -36,7 +32,7 @@ public class MessageConsumer<T> implements MessageListener {
 			T value = (T) objMessage.getObject();
             log.info("wpadl " + value.getClass().getSimpleName() + ": " + value);
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.error("Problem z konsumentem wiadomości");
 		}
 	}
 

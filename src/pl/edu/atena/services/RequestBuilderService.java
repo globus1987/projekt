@@ -8,6 +8,7 @@ import pl.edu.atena.rest.StartBean;
 import pl.edu.atena.utilities.ObjectConverter;
 import pl.edu.atena.xls.dao.ImportDataFromXLS;
 
+import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,24 +17,28 @@ import java.io.IOException;
 import java.time.LocalDate;
 @Path(value = "/RequestBuilder")
 public class RequestBuilderService {
-	
+	private static final String DATEFORMAT = "%s-%s-%s";
+	@Inject
+	private EmailBean emailBean;
+	@Inject
+	private ObjectConverter objectConverter;
 	@GET
 	@Path(value = "/getRequest")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response create() throws MessagingException, InvalidFormatException, IOException {
 		StartBean start = new StartBean();
 		start.getRoot().setRequestCapacity(1);
-		LocalDate date = LocalDate.now();		
-		String data=String.format("%s-%s-%s", date.getYear(),date.getMonthValue(),date.getDayOfMonth());
+		LocalDate date = LocalDate.now();
+		String data = String.format(DATEFORMAT, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 		start.getRoot().getInstanceList().get(0).setSalesDate(data);
 		start.getRoot().getInstanceList().get(0).setValidDate(data);
 		MessageEmailBean<String> mess = new MessageEmailBean<>();
-		mess.setText(ObjectConverter.convertRequestToJSON(start));
-		EmailBean.sendGMXText(mess);
+		mess.setText(objectConverter.convertRequestToJSON(start));
+		emailBean.sendGMXText(mess);
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());
-		return Response.status(200).entity(ObjectConverter.convertRequestToJSON(start)).build();
+		return Response.status(200).entity(objectConverter.convertRequestToJSON(start)).build();
 	}
 	
 	@POST
@@ -47,33 +52,33 @@ public class RequestBuilderService {
 		
 		StartBean start = new StartBean();
 		start.getRoot().setRequestCapacity(1);
-		LocalDate date = LocalDate.now();		
-		String data=String.format("%s-%s-%s", date.getYear(),date.getMonthValue(),date.getDayOfMonth());
+		LocalDate date = LocalDate.now();
+		String data = String.format(DATEFORMAT, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 		start.getRoot().getInstanceList().get(0).setSalesDate(data);
 		start.getRoot().getInstanceList().get(0).setValidDate(data);
 		MessageEmailBean<String> mess = new MessageEmailBean<>();
-		mess.setText(ObjectConverter.convertRequestToJSON(start));
-		EmailBean.sendGMXText(mess);
+		mess.setText(objectConverter.convertRequestToJSON(start));
+		emailBean.sendGMXText(mess);
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects(filename));
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations(filename));
-		
-		return Response.status(200).entity(ObjectConverter.convertRequestToJSON(start)).build();
+
+		return Response.status(200).entity(objectConverter.convertRequestToJSON(start)).build();
 	}
 	
 	public String createRequest() throws MessagingException, InvalidFormatException, IOException {
 		StartBean start = new StartBean();
 		start.getRoot().setRequestCapacity(1);
-		LocalDate date = LocalDate.now();		
-		String data=String.format("%s-%s-%s", date.getYear(),date.getMonthValue(),date.getDayOfMonth());
+		LocalDate date = LocalDate.now();
+		String data = String.format(DATEFORMAT, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 		start.getRoot().getInstanceList().get(0).setSalesDate(data);
 		start.getRoot().getInstanceList().get(0).setValidDate(data);
 		MessageEmailBean<String> mess = new MessageEmailBean<>();
-		mess.setText(ObjectConverter.convertRequestToJSON(start));
-		EmailBean.sendGMXText(mess);
+		mess.setText(objectConverter.convertRequestToJSON(start));
+		emailBean.sendGMXText(mess);
 		ImportDataFromXLS objdata = new ImportDataFromXLS();
 		start.getRoot().getInstanceList().get(0).setObjectList(objdata.importObjects());
 		start.getRoot().getInstanceList().get(0).setRelationList(objdata.importRelations());
-		return ObjectConverter.convertRequestToJSON(start);
+		return objectConverter.convertRequestToJSON(start);
 	}
 }

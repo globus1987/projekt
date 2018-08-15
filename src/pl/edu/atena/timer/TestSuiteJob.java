@@ -1,10 +1,10 @@
 package pl.edu.atena.timer;
 
+import pl.edu.atena.dao.UserDao;
+
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-
-import pl.edu.atena.dao.UserDao;
 
 
 @Startup
@@ -14,10 +14,8 @@ public class TestSuiteJob {
     /**
      * Default constructor. 
      */
-    public TestSuiteJob() {
-        // TODO Auto-generated constructor stub
-    }
-	@EJB
+
+    @EJB
 	private UserDao userDao;
 
 

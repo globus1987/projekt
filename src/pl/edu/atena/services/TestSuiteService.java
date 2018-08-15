@@ -43,7 +43,8 @@ public class TestSuiteService {
 	private InputFileBean inputFile;
 	@Inject
 	private ObjectConverter objectConvert;
-
+	@Inject
+	private TestowaXLS testowaXLS;
 	@Inject
 	private EmailBean emailBean;
 
@@ -68,8 +69,9 @@ public class TestSuiteService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getnewresults(@PathParam("id") Long id) throws IOException, JAXBException, MessagingException {
 		TestSuite ts = testSuiteDao.find(id);
-		ts.getTestcaseList().forEach(tc -> tc.checkTestCaseStatus()
-		);
+		for (TestCase tc : ts.getTestcaseList()) {
+			tc.checkTestCaseStatus();
+		}
 		testSuiteDao.save(ts);
 		return Response.status(200).entity(testSuiteDao.find(id)).build();
 	}
@@ -79,7 +81,7 @@ public class TestSuiteService {
 	@Produces(MediaType.APPLICATION_JSON)
     public Response testuj() throws InvalidFormatException, IOException {
 
-		return Response.status(200).entity(TestowaXLS.testuj()).build();
+		return Response.status(200).entity(testowaXLS.testuj()).build();
 	}
 
 	@GET
@@ -115,7 +117,7 @@ public class TestSuiteService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteAll() {
         testSuiteDao.delete();
-        System.out.println("usuwamy");
+		log.info("usuwamy test suity");
         return Response.ok().build();
     }
 	@PUT
@@ -128,11 +130,7 @@ public class TestSuiteService {
 				ts.setRequest(reqbuilder.createRequest());
 				testSuiteDao.save(ts);
 			} catch (InvalidFormatException | MessagingException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("problem z wygenerowaniem requesta");
 			}
 		});
 		return Response.status(200).entity(testsuiteList).build();
@@ -141,8 +139,7 @@ public class TestSuiteService {
 	@POST
 	@Path(value = "/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createAll()
-            throws SecurityException, IllegalStateException, IOException, JAXBException, MessagingException {
+	public Response createAll() {
 		Random generator = new Random();
 
 		TestSuite tsexample = testFactory.getNewTestSuite();
@@ -162,7 +159,7 @@ public class TestSuiteService {
         tsexample.setCreatorUser(user);
 
 
-        List<TestResult> resultlist = new ArrayList<TestResult>();
+		List<TestResult> resultlist = new ArrayList<>();
 		result.setActualValue(String.valueOf(generator.nextInt()));
 		result2.setActualValue(String.valueOf(generator.nextInt()));
 		result3.setActualValue(String.valueOf(generator.nextInt()));
@@ -173,7 +170,7 @@ public class TestSuiteService {
 
 		testcase.setName(String.valueOf(generator.nextInt()));
 		testcase.setResultList(resultlist);
-		List<TestCase> testcaselist = new ArrayList<TestCase>();
+		List<TestCase> testcaselist = new ArrayList<>();
 		testcaselist.add(testcase);
 		tsexample.setTestcaseList(testcaselist);
 
@@ -187,11 +184,7 @@ public class TestSuiteService {
 	@Path(value = "/allWithJTA")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createAllWithJTA(@Context HttpHeaders headers)
-            throws SecurityException, IllegalStateException,
-            IOException, JAXBException, MessagingException {
-
-		UriBuilder uri = uriInfo.getAbsolutePathBuilder();
-
+			throws MessagingException {
 		TestSuite tsexample = testFactory.getNewTestSuite();
 		User user = testFactory.getNewUser();
 		TestCase testcase = testFactory.getNewTestCase();
@@ -199,12 +192,12 @@ public class TestSuiteService {
 		TestResult result2 = testFactory.getNewTestResult();
 		TestResult result3 = testFactory.getNewTestResult();
 		tsexample.setCreatorUser(user);
-		List<TestResult> resultlist = new ArrayList<TestResult>();
+		List<TestResult> resultlist = new ArrayList<>();
 		resultlist.add(result);
 		resultlist.add(result2);
 		resultlist.add(result3);
 		testcase.setResultList(resultlist);
-		List<TestCase> testcaselist = new ArrayList<TestCase>();
+		List<TestCase> testcaselist = new ArrayList<>();
 		testcaselist.add(testcase);
 		tsexample.setTestcaseList(testcaselist);
 
@@ -216,18 +209,16 @@ public class TestSuiteService {
 			testSuiteDao.save(tsexample);
 
 		} catch (Exception e) {
-            System.out.println("cos sie wywalilo");
-			System.out.println(e.getCause().toString());
+			log.error(e.getCause().toString());
 		}
-		;
 		userDao.updateUser(tsexample.getCreatorUser());
 		MessageEmailBean<TestSuite> mess = new MessageEmailBean<>();
 		mess.setText(testSuiteDao.find(tsexample.getId()));
-		EmailBean.sendGMXText(mess);
+		emailBean.sendGMXText(mess);
 		Link link = Link.fromUri(uriInfo.getAbsolutePath()).rel("self").type("UPDATE").build();
 		Link link2 = Link.fromUri(uriInfo.getAbsolutePath()).rel("self").type("GET").build();
 		Link link3 = Link
-				.fromUri("http://localhost:8090/MultiSpi-0.0.1-SNAPSHOT/multiApi/user/byId/"
+				.fromUri("http://localhost:8090/MultiSpi-0.0.2-SNAPSHOT/multiApi/user/byId/"
 						+ testSuiteDao.find(tsexample.getId()).getCreatorUser().getId())
 				.rel("self").type("GET").title("pobieranie usera").build();
 		return Response.ok(testSuiteDao.find(tsexample.getId())).links(link, link2, link3).build();

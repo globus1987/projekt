@@ -16,10 +16,6 @@ import javax.jms.ObjectMessage;
 public class ReaderSecond<T> implements MessageListener {
 	Logger log = Logger.getLogger("messageconsumer");
 
-	public ReaderSecond() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @see MessageListener#onMessage(Message)
 	 */
@@ -29,7 +25,7 @@ public class ReaderSecond<T> implements MessageListener {
 			T value = (T) objMessage.getObject();
 			log.info("wpadl topic " + value.getClass().getSimpleName() + ": " + value);
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.error("problem z odebraniem topica");
 		}
 	}
 }

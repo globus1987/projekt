@@ -1,16 +1,15 @@
 package pl.edu.atena.logger;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ejb.Stateful;
-
 import lombok.Data;
 import pl.edu.atena.enums.MessageCodes;
+
+import javax.ejb.Stateful;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Stateful
 public class MessageListBean {
-	private List<MessageBean> messageList = new ArrayList<MessageBean>();
+	private List<MessageBean> messageList = new ArrayList<>();
 	
 	
 	public void addMessage(MessageCodes code) {

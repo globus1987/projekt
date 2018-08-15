@@ -1,32 +1,31 @@
 package pl.edu.atena.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import lombok.Data;
 
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RootBean {
-	private List<InstanceBean> InstanceList = new ArrayList<>();
+	private List<InstanceBean> instanceList = new ArrayList<>();
 	private int requestCapacity;
 	private String calculationMethod;
-	
-	
-	public RootBean(List<InstanceBean> InstanceListIn, int requestCapacity, String calculationMethod) {
+
+
+	public RootBean(List<InstanceBean> instanceListIn, int requestCapacity, String calculationMethod) {
 		super();
-		this.InstanceList = InstanceListIn;
+		this.instanceList = instanceListIn;
 		this.requestCapacity = requestCapacity;
 		this.calculationMethod = calculationMethod;
 	}
 	public RootBean() {
 		super();
 
-		this.InstanceList.clear();
-		this.InstanceList.add(new InstanceBean());
+		this.instanceList.clear();
+		this.instanceList.add(new InstanceBean());
 		this.requestCapacity = 0;
 		this.calculationMethod = "NAME";
 	}

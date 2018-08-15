@@ -1,6 +1,5 @@
 package pl.edu.atena.services;
 
-import org.jboss.logging.Logger;
 import pl.edu.atena.dao.TestCaseDao;
 import pl.edu.atena.dao.TestResultDao;
 import pl.edu.atena.dao.TestSuiteDao;
@@ -22,7 +21,6 @@ import java.util.List;
 
 @Path(value = "/user")
 public class UserService {
-	private Logger log = Logger.getLogger(TestSuiteService.class);
 	@Inject
 	private UserDao userDao;
 	@Inject

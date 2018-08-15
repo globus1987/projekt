@@ -16,12 +16,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
-import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.util.List;
 
 @Stateless
@@ -56,7 +53,7 @@ public class TestSuiteDao {
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	@Interceptors(CzasTrwaniaMetodyLogger.class)
-	public void save(TestSuite testSuite) throws IOException, JAXBException, MessagingException {
+	public void save(TestSuite testSuite) {
 
 		if (testSuite.getId() == null || testSuite.getId() == 0) {
 			eventPrzed.fire(testSuite);
@@ -69,7 +66,6 @@ public class TestSuiteDao {
 			loger.info("merge");
 
 		}
-		;
 		loger.info(testSuite);
 		// producer.sentMessage(testSuite);
 		// producer.sentTopic(testSuite);

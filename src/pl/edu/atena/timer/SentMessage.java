@@ -9,7 +9,6 @@ public class SentMessage {
      * Default constructor. 
      */
     public SentMessage() {
-        // TODO Auto-generated constructor stub
     }
 	
 

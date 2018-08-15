@@ -6,13 +6,15 @@ import pl.edu.atena.email.MessageEmailBean;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.jms.*;
 import javax.mail.MessagingException;
 import java.io.Serializable;
 @Stateless
 public class MessageProducerMulti<T> {
 	Logger log = Logger.getLogger("log_producer");
-	
+	@Inject
+	private EmailBean emailBean;
 	@Resource(mappedName = "java:/JmsXA")
 	private ConnectionFactory connectionFactory;
 	@Resource(lookup = "java:/jms/queue/ProjektQ")
@@ -35,7 +37,7 @@ public class MessageProducerMulti<T> {
 			publisher.send(message);
             log.info("wyslano message");
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.error("Problem z wysłaniem komunikatu do kolejki");
 		}
 	}
 	public void sentTopic(T value) throws MessagingException {
@@ -51,12 +53,12 @@ public class MessageProducerMulti<T> {
 			message.setObject((Serializable) value);
 			MessageEmailBean<String> mess = new MessageEmailBean<>();
 			mess.setText(value.toString());
-			EmailBean.sendGMXText(mess);
+			emailBean.sendGMXText(mess);
 			publisher.send(message);
             log.info("wyslano topic");
 			
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.error("Problem z wysłaniem topicu");
 		}
 	}
 }

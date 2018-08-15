@@ -17,7 +17,6 @@ public AttributeBean() {
 }
 @Override
 public void setDefaultValues() {
-	// TODO Auto-generated method stub
 	this.symbol="";
 	this.value="";
 }

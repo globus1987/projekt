@@ -1,16 +1,13 @@
 package pl.edu.atena.interceptor;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Arrays;
+import pl.edu.atena.audyt.AudytDao;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-
-import org.apache.log4j.Logger;
-
-import pl.edu.atena.audyt.AudytDao;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
 
 public class CzasTrwaniaMetodyLogger {
 
@@ -29,8 +26,6 @@ public class CzasTrwaniaMetodyLogger {
 			String clazz = invocation.getTarget().getClass().getCanonicalName();
 			String method = invocation.getMethod().getName();
 			String parametry=Arrays.asList(invocation.getParameters()).toString();
-			Logger log = Logger.getLogger(clazz);
-			
 			audytdao.loguj(clazz, method, mils, parametry);
 		}
 	}

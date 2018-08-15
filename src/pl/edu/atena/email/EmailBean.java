@@ -1,25 +1,26 @@
 package pl.edu.atena.email;
 
-import java.util.Properties;
+import lombok.Data;
 
 import javax.ejb.Stateless;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.util.Properties;
 
 @Stateless
+@Data
 public class EmailBean {
-	public static void sendGMXText(MessageEmailBean mess) throws MessagingException {
+
+	public EmailBean() {
+		throw new IllegalStateException("Utility class");
+	}
+
+	public void sendGMXText(MessageEmailBean mess) throws MessagingException {
 		String sender = "akademiajava@gmx.com";
-		String password = "Akademia123";
+		String pass = "Akademia123";
 		String receiver = "globus1987@gmail.com";
 
 		Properties properties = new Properties();
@@ -29,7 +30,7 @@ public class EmailBean {
 		properties.put("mail.smtp.port", "587");
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.user", sender);
-		properties.put("mail.smtp.password", password);
+		properties.put("mail.smtp.password", pass);
 		properties.put("mail.smtp.starttls.enable", "true");
 
 		Session mailSession = Session.getInstance(properties, new Authenticator() {

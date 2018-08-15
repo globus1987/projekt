@@ -1,11 +1,10 @@
 package pl.edu.atena.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import lombok.Data;
 
 
 @Data
@@ -24,11 +23,11 @@ public class InstanceBean implements IModelBean {
 		this.state = "DEV";
 		this.salesDate = "2000-01-01";
 		this.validDate = "2000-01-01";
-		this.objectList = new ArrayList<ObjectBean>();
+		this.objectList = new ArrayList<>();
 		this.objectList.add(new ObjectBean());
-		this.relationList = new ArrayList<RelationBean>();
+		this.relationList = new ArrayList<>();
 		this.relationList.add(new RelationBean());
-		this.operationList = new ArrayList<OperationBean>();
+		this.operationList = new ArrayList<>();
 		this.operationList.add(new OperationBean());
 	}
 	@Override
@@ -37,11 +36,11 @@ public class InstanceBean implements IModelBean {
 		this.state = "";
 		this.salesDate = "";
 		this.validDate = "";
-		this.objectList = new ArrayList<ObjectBean>();
+		this.objectList = new ArrayList<>();
 		this.objectList.add(new ObjectBean());
-		this.relationList = new ArrayList<RelationBean>();
+		this.relationList = new ArrayList<>();
 		this.relationList.add(new RelationBean());
-		this.operationList = new ArrayList<OperationBean>();
+		this.operationList = new ArrayList<>();
 		this.operationList.add(new OperationBean());		
 	}
 

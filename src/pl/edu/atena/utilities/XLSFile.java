@@ -1,13 +1,12 @@
 package pl.edu.atena.utilities;
 
-import javax.ws.rs.FormParam;
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
+
+import javax.ws.rs.FormParam;
  
 public class XLSFile {
- 
-    public XLSFile() {
-    }
- 
+
+
     private byte[] data;
  
     public byte[] getData() {

@@ -1,20 +1,19 @@
 package pl.edu.atena.services;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import org.apache.log4j.Logger;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import pl.edu.atena.utilities.XLSFile;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-
-import pl.edu.atena.utilities.XLSFile;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 @Path(value = "/upload")
 public class UploadFileService {
+	Logger log = Logger.getLogger("log_upload");
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
@@ -25,12 +24,9 @@ public class UploadFileService {
 		try {
 			writeFile(form.getData(), fileName);
 		} catch (IOException e) {
-			
-			e.printStackTrace();
+
+			log.error("problem z zapisem pliku");
 		}
-
-		System.out.println("Done");
-
 		return Response.status(200)
 		    .entity("uploadFile is called, Uploaded file name : " + fileName).build();
 
@@ -45,11 +41,11 @@ public class UploadFileService {
 			file.createNewFile();
 		}
 
-		FileOutputStream fop = new FileOutputStream(file);
+		try (FileOutputStream fop = new FileOutputStream(file)) {
 
-		fop.write(content);
-		fop.flush();
-		fop.close();
+			fop.write(content);
+			fop.flush();
+		}
 
 	}
 }

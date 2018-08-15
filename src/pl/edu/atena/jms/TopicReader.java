@@ -17,7 +17,6 @@ public class TopicReader<T> implements MessageListener {
 	Logger log = Logger.getLogger("messageconsumer");
 
 	public TopicReader() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -29,7 +28,7 @@ public class TopicReader<T> implements MessageListener {
 			T value = (T) objMessage.getObject();
             log.info("wpadl topic glowny " + value.getClass().getSimpleName() + ": " + value);
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.error("problem z odebraniem komunikatu");
 		}
 	}
 }

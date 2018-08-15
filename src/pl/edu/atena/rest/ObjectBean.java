@@ -18,7 +18,7 @@ public ObjectBean() {
 	super();
 	this.id="1";
 	this.name="defaultName";
-	this.attributeList=new ArrayList<AttributeBean>();
+	this.attributeList = new ArrayList<>();
 	this.attributeList.add(new AttributeBean());
 	
 }
@@ -26,7 +26,7 @@ public ObjectBean() {
 public void setDefaultValues() {
 	this.id="1";
 	this.name="";
-	this.attributeList=new ArrayList<AttributeBean>();
+	this.attributeList = new ArrayList<>();
 	this.attributeList.add(new AttributeBean());
 }
 
