@@ -1,29 +1,6 @@
 package pl.edu.atena.services;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
 import pl.edu.atena.dao.TestCaseDao;
 import pl.edu.atena.dao.TestResultDao;
 import pl.edu.atena.dao.TestSuiteDao;
@@ -34,6 +11,14 @@ import pl.edu.atena.entities.factory.TestElementFactory;
 import pl.edu.atena.enums.UserType;
 import pl.edu.atena.utilities.InputFileBean;
 import pl.edu.atena.utilities.ObjectConverter;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 @Path(value = "/user")
 public class UserService {
@@ -71,7 +56,7 @@ public class UserService {
 	}
 
 	@GET
-	@Path(value = "/id/{id}")
+    @Path(value = "/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getU1(@PathParam("id") Long id) {
 		User user = userDao.find(id);

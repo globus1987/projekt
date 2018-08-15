@@ -8,7 +8,6 @@ import java.io.InputStream;
 
 import javax.ejb.Stateful;
 
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -32,7 +31,7 @@ public class InputFileBean {
 
 	}
 
-	public InputFileBean() throws IOException, EncryptedDocumentException, InvalidFormatException {
+    public InputFileBean() throws IOException, InvalidFormatException {
 		this.fileIn = new FileInputStream(new File("D:/TestTool.xlsx"));
 		this.fileOut = new FileOutputStream((new File("D:/TestTool2.xlsx")));
 		XSSFWorkbook wb = null;
@@ -61,7 +60,8 @@ public class InputFileBean {
 				fileIn.close();
 		}
 	}
-	public InputFileBean(String filename) throws IOException, EncryptedDocumentException, InvalidFormatException {
+
+    public InputFileBean(String filename) throws IOException, InvalidFormatException {
 		this.fileIn = new FileInputStream(new File(filename));
 		this.fileOut = new FileOutputStream((new File(filename)));
 		XSSFWorkbook wb = null;
@@ -92,7 +92,7 @@ public class InputFileBean {
 	}
 
 	public InputFileBean(InputStream inputStream)
-			throws IOException, EncryptedDocumentException, InvalidFormatException {
+            throws IOException, InvalidFormatException {
 		FileInputStream fileIn = null;
 		FileOutputStream fileOut = null;
 		XSSFWorkbook wb = null;

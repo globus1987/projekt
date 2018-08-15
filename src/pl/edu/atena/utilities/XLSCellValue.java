@@ -1,10 +1,10 @@
 package pl.edu.atena.utilities;
 
-import javax.ejb.Stateless;
-
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+
+import javax.ejb.Stateless;
 
 @Stateless
 public class XLSCellValue {

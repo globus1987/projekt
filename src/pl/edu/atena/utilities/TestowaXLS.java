@@ -1,20 +1,18 @@
 package pl.edu.atena.utilities;
 
-import java.io.IOException;
-
-import javax.inject.Inject;
-
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-
 import pl.edu.atena.logger.MessageListBean;
 import pl.edu.atena.validator.InputFileSetupValidatorBean;
+
+import javax.inject.Inject;
+import java.io.IOException;
 
 public abstract class TestowaXLS {
 	@Inject
 	private static MessageListBean messageListForFile = new MessageListBean();
-	public static MessageListBean testuj() throws EncryptedDocumentException, InvalidFormatException, IOException {
+
+    public static MessageListBean testuj() throws InvalidFormatException, IOException {
 		InputFileBean input = new InputFileBean();
 		XSSFSheet sheet = input.getSheet("Setup");
 		boolean validationResult = InputFileSetupValidatorBean.getValidationResult(sheet,messageListForFile);

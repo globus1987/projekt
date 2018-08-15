@@ -1,13 +1,13 @@
 package pl.edu.atena.jms;
 
+import org.apache.log4j.Logger;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
-
-import org.apache.log4j.Logger;
 
 /**
  * Message-Driven Bean implementation class for: MessageConsumer
@@ -34,7 +34,7 @@ public class MessageConsumer<T> implements MessageListener {
 		try {
 			ObjectMessage objMessage = (ObjectMessage) message;
 			T value = (T) objMessage.getObject();
-			log.info("wpad³ "+value.getClass().getSimpleName()+": " + value);
+            log.info("wpadl " + value.getClass().getSimpleName() + ": " + value);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

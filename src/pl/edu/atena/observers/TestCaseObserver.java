@@ -1,13 +1,13 @@
 package pl.edu.atena.observers;
 
-import javax.ejb.Stateless;
-import javax.enterprise.event.Observes;
-import javax.enterprise.event.TransactionPhase;
-
 import lombok.Data;
 import lombok.extern.java.Log;
 import pl.edu.atena.entities.TestSuite;
 import pl.edu.atena.observers.TestSuiteEvent.Typ;
+
+import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 
 @Data
 @Stateless

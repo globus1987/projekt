@@ -1,9 +1,11 @@
 package pl.edu.atena.webservice;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import pl.edu.atena.dao.TestSuiteDao;
+import pl.edu.atena.dao.UserDao;
+import pl.edu.atena.entities.TestCase;
+import pl.edu.atena.entities.TestResult;
+import pl.edu.atena.entities.TestSuite;
+import pl.edu.atena.entities.User;
 
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
@@ -15,13 +17,10 @@ import javax.mail.MessagingException;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.ws.Holder;
-
-import pl.edu.atena.dao.TestSuiteDao;
-import pl.edu.atena.dao.UserDao;
-import pl.edu.atena.entities.TestCase;
-import pl.edu.atena.entities.TestResult;
-import pl.edu.atena.entities.TestSuite;
-import pl.edu.atena.entities.User;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @WebService(targetNamespace = "http://pl.edu.atena")
 public class WSTest {
@@ -77,7 +76,7 @@ public class WSTest {
 			testSuiteDao.save(tsexample);
 
 		} catch (Exception e) {
-			System.out.println("coœ siê wywali³o");
+			System.out.println("cos sie wywalilo");
 			System.out.println(e.getCause().toString());
 		}
 		return tsexample;

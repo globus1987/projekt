@@ -1,13 +1,13 @@
 package pl.edu.atena.jms;
 
+import org.apache.log4j.Logger;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
-
-import org.apache.log4j.Logger;
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
 		@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/jms/topic/ProjektT"),
@@ -27,7 +27,7 @@ public class ReaderSecond<T> implements MessageListener {
 		try {
 			ObjectMessage objMessage = (ObjectMessage) message;
 			T value = (T) objMessage.getObject();
-			log.info("wpad³ topic "+value.getClass().getSimpleName()+": " + value);
+			log.info("wpadl topic " + value.getClass().getSimpleName() + ": " + value);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

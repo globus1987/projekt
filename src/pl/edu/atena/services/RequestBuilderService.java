@@ -1,31 +1,19 @@
 package pl.edu.atena.services;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-
-import javax.mail.MessagingException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
 import pl.edu.atena.email.EmailBean;
 import pl.edu.atena.email.MessageEmailBean;
 import pl.edu.atena.rest.StartBean;
 import pl.edu.atena.utilities.ObjectConverter;
-import pl.edu.atena.utilities.XLSFile;
 import pl.edu.atena.xls.dao.ImportDataFromXLS;
+
+import javax.mail.MessagingException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.time.LocalDate;
 @Path(value = "/RequestBuilder")
 public class RequestBuilderService {
 	

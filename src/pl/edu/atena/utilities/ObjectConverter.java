@@ -75,7 +75,7 @@ public class ObjectConverter {
 
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		TestSuite testsuite = (TestSuite) jaxbUnmarshaller.unmarshal(file);
-		System.out.println("to odczyta³em z xml: "+testsuite);
+        System.out.println("to odczytalem z xml: " + testsuite);
 
 	}
 

@@ -1,7 +1,10 @@
 package pl.edu.atena.entities;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -86,7 +89,7 @@ public class TestSuite extends BaseEntity {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "TESTSUITE_TESTCASE", joinColumns = @JoinColumn(name = "TS_ID"), inverseJoinColumns = @JoinColumn(name = "TC_ID"))
 	private List<TestCase> testcaseList;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date importDate;
 	@Lob
 	private String request;
@@ -96,7 +99,7 @@ public class TestSuite extends BaseEntity {
 		super();
 		this.creatorUser = new User();
 		this.name = "testowy suite";
-
+		this.importDate = Date.from(Instant.now());
 	}
 
 	@Override

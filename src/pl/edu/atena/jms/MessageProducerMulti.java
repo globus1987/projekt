@@ -1,23 +1,14 @@
 package pl.edu.atena.jms;
 
-import java.io.Serializable;
+import org.apache.log4j.Logger;
+import pl.edu.atena.email.EmailBean;
+import pl.edu.atena.email.MessageEmailBean;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.Topic;
+import javax.jms.*;
 import javax.mail.MessagingException;
-
-import org.apache.log4j.Logger;
-
-import pl.edu.atena.email.EmailBean;
-import pl.edu.atena.email.MessageEmailBean;
+import java.io.Serializable;
 @Stateless
 public class MessageProducerMulti<T> {
 	Logger log = Logger.getLogger("log_producer");
@@ -42,7 +33,7 @@ public class MessageProducerMulti<T> {
 			message.setObject((Serializable) value);
 
 			publisher.send(message);
-			log.info("wys³ano message");
+            log.info("wyslano message");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +53,7 @@ public class MessageProducerMulti<T> {
 			mess.setText(value.toString());
 			EmailBean.sendGMXText(mess);
 			publisher.send(message);
-			log.info("wys³ano topic");
+            log.info("wyslano topic");
 			
 		} catch (JMSException e) {
 			e.printStackTrace();

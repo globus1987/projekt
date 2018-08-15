@@ -1,7 +1,13 @@
 package pl.edu.atena.dao;
 
-import java.io.IOException;
-import java.util.List;
+import lombok.extern.java.Log;
+import org.apache.log4j.Logger;
+import pl.edu.atena.entities.TestSuite;
+import pl.edu.atena.interceptor.CzasTrwaniaMetodyLogger;
+import pl.edu.atena.jms.MessageProducerMulti;
+import pl.edu.atena.observers.TestSuiteEvent;
+import pl.edu.atena.observers.TestSuiteEvent.Typ;
+import pl.edu.atena.utilities.InputFileBean;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,16 +21,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.xml.bind.JAXBException;
-
-import org.apache.log4j.Logger;
-
-import lombok.extern.java.Log;
-import pl.edu.atena.entities.TestSuite;
-import pl.edu.atena.interceptor.CzasTrwaniaMetodyLogger;
-import pl.edu.atena.jms.MessageProducerMulti;
-import pl.edu.atena.observers.TestSuiteEvent;
-import pl.edu.atena.observers.TestSuiteEvent.Typ;
-import pl.edu.atena.utilities.InputFileBean;
+import java.io.IOException;
+import java.util.List;
 
 @Stateless
 @Log
@@ -88,6 +86,12 @@ public class TestSuiteDao {
 		if (testSuite != null) {
 			em.remove(testSuite);
 		}
+	}
+
+	public void delete() {
+		List<TestSuite> testSuiteList = em.createQuery("select p from TestSuite p").getResultList();
+		testSuiteList.forEach(e -> em.remove(e));
+
 	}
 
 	@SuppressWarnings("unchecked")

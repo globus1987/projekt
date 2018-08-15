@@ -1,43 +1,7 @@
 package pl.edu.atena.services;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
-import javax.xml.bind.JAXBException;
-
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-
-
 import pl.edu.atena.dao.TestCaseDao;
 import pl.edu.atena.dao.TestResultDao;
 import pl.edu.atena.dao.TestSuiteDao;
@@ -52,7 +16,16 @@ import pl.edu.atena.entities.factory.TestElementFactory;
 import pl.edu.atena.utilities.InputFileBean;
 import pl.edu.atena.utilities.ObjectConverter;
 import pl.edu.atena.utilities.TestowaXLS;
-import pl.edu.atena.utilities.XLSFile;
+
+import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Path(value = "/testsuite")
 public class TestSuiteService {
@@ -83,7 +56,7 @@ public class TestSuiteService {
 	UriInfo uriInfo;
 
 	@GET
-	@Path(value = "/id/{id}")
+    @Path(value = "/TS/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTS(@PathParam("id") Long id) {
 
@@ -102,9 +75,9 @@ public class TestSuiteService {
 	}
 
 	@GET
-	@Path(value = "/testuj")
+    @Path(value = "/waliduj")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response testuj() throws EncryptedDocumentException, InvalidFormatException, IOException {
+    public Response testuj() throws InvalidFormatException, IOException {
 
 		return Response.status(200).entity(TestowaXLS.testuj()).build();
 	}
@@ -114,18 +87,39 @@ public class TestSuiteService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
 		List<TestSuite> testsuiteList = testSuiteDao.selectAll();
-		return Response.status(200).entity(testsuiteList).build();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(testsuiteList).build();
 	}
 	@GET
-	@Path(value = "/request/{id}")
+    @Path(value = "/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getReqById(@PathParam("id") Long id) {
 		
 		return Response.status(200).entity(testSuiteDao.find(id).getRequest()).build();
 	}
-	
+
+    @DELETE
+    @Path(value = "/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteReqById(@PathParam("id") Long id) {
+        testSuiteDao.delete(id);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path(value = "/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAll() {
+        testSuiteDao.delete();
+        System.out.println("usuwamy");
+        return Response.ok().build();
+    }
 	@PUT
-	@Path(value = "/all")
+    @Path(value = "/createrequests")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setRequests() {
 		List<TestSuite> testsuiteList = testSuiteDao.selectAll();
@@ -148,8 +142,7 @@ public class TestSuiteService {
 	@Path(value = "/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createAll()
-			throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException,
-			HeuristicMixedException, HeuristicRollbackException, IOException, JAXBException, MessagingException {
+            throws SecurityException, IllegalStateException, IOException, JAXBException, MessagingException {
 		Random generator = new Random();
 
 		TestSuite tsexample = testFactory.getNewTestSuite();
@@ -165,20 +158,11 @@ public class TestSuiteService {
 		TestResult result2 = testFactory.getNewTestResult();
 		TestResult result3 = testFactory.getNewTestResult();
 
-		testCaseDao.save(testcase);
-		testCaseDao.save(testcase2);
 
-		testResultDao.save(result);
-		testResultDao.save(result2);
-		testResultDao.save(result3);
+        tsexample.setCreatorUser(user);
 
-		userDao.save(user);
-		testSuiteDao.save(tsexample);
-		tsexample.setCreatorUser(user);
-		testSuiteDao.save(tsexample);
-		userDao.save(user);
 
-		List<TestResult> resultlist = new ArrayList<TestResult>();
+        List<TestResult> resultlist = new ArrayList<TestResult>();
 		result.setActualValue(String.valueOf(generator.nextInt()));
 		result2.setActualValue(String.valueOf(generator.nextInt()));
 		result3.setActualValue(String.valueOf(generator.nextInt()));
@@ -193,10 +177,8 @@ public class TestSuiteService {
 		testcaselist.add(testcase);
 		tsexample.setTestcaseList(testcaselist);
 
-		testCaseDao.save(testcase);
-		testCaseDao.save(testcase2);
-		testResultDao.save(result);
-		testSuiteDao.save(tsexample);
+
+        testSuiteDao.save(tsexample);
 
 		return Response.status(200).entity(tsexample).build();
 	}
@@ -205,8 +187,8 @@ public class TestSuiteService {
 	@Path(value = "/allWithJTA")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createAllWithJTA(@Context HttpHeaders headers)
-			throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException,
-			HeuristicMixedException, HeuristicRollbackException, IOException, JAXBException, MessagingException {
+            throws SecurityException, IllegalStateException,
+            IOException, JAXBException, MessagingException {
 
 		UriBuilder uri = uriInfo.getAbsolutePathBuilder();
 
@@ -234,7 +216,7 @@ public class TestSuiteService {
 			testSuiteDao.save(tsexample);
 
 		} catch (Exception e) {
-			System.out.println("coœ siê wywali³o");
+            System.out.println("cos sie wywalilo");
 			System.out.println(e.getCause().toString());
 		}
 		;
