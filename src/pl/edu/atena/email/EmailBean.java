@@ -18,8 +18,8 @@ import javax.mail.internet.MimeMultipart;
 @Stateless
 public class EmailBean {
 	public static void sendGMXText(MessageEmailBean mess) throws MessagingException {
-		String sender = "globus1987@gmx.com";
-		String password = "Cartusia21";
+		String sender = "akademiajava@gmx.com";
+		String password = "Akademia123";
 		String receiver = "globus1987@gmail.com";
 
 		Properties properties = new Properties();
