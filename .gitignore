@@ -24,13 +24,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-.idea/artifacts/
-.idea/compiler.xml
-.idea/dbnavigator.xml
-.idea/misc.xml
-.idea/sonarlint/
-.idea/vcs.xml
-.idea/workspace.xml
 MultiSpi.iml
 lib/
 target/
@@ -38,21 +31,3 @@ target/
 .metadata/WebContent/WEB-INF/
 .settings/
 build/classes
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/services/FileServiceImpl.class
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/services/IFileService.class
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/services/UploadFileService.class
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/utilities/XLSCellValue$1.class
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/utilities/XLSFile.class
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/activation-1.1.1.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/apache-mime4j-0.6.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/javax.json-api-1.1.2.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/javax.persistence-api-2.2.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/jaxb-core-2.3.0.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/jaxb-impl-2.3.0.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/resteasy-jaxb-provider-3.6.0.Final.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/resteasy-multipart-provider-3.6.0.Final.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/sisu-guice-2.1.7-noaop.jar
-target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/lib/sisu-inject-bean-1.4.2.jar
-target/classes/pl/edu/atena/utilities/XLSCellValue$1.class
-target/generated-sources/
-target/test-classes/
