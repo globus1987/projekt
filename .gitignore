@@ -33,6 +33,8 @@ hs_err_pid*
 .idea/workspace.xml
 MultiSpi.iml
 lib/
+target/
+idea/
 target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/services/FileServiceImpl.class
 target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/services/IFileService.class
 target/MultiSpi-0.0.1-SNAPSHOT/WEB-INF/classes/pl/edu/atena/services/UploadFileService.class
