@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="EJB" type="EJB">
-    <CLASSES>
-      <root url="jar://D:/Akademia JAVA/wildfly-11.0.0.Final/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
